@@ -1,0 +1,5 @@
+dotfiles
+__pycache__
+*.retry
+.cache
+.vagrant

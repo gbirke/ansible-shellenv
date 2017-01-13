@@ -1,0 +1,10 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "minimal/jessie64"
+
+  # TODO Install Python and Ansible, install testinfra and paramiko, run playbooks and tests
+
+end

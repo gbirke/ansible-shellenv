@@ -1,0 +1,19 @@
+---
+- hosts: all
+  tasks:
+    - name: Check out dotfile repo
+      git: repo=https://github.com/gbirke/dotfiles.git dest=dotfiles
+      delegate_to: 127.0.0.1
+
+    - name: Copy dotfile repo to remote home
+      synchronize: src=dotfiles/ dest={{ ansible_env.HOME }}/.dotfiles recursive=yes
+
+    - name: Store dotfile names
+      command: find .dotfiles -type f -name ".*"
+      register: found_dotfiles
+      changed_when: False
+
+    - name: Symlink dotfiles from dotfile dir
+      file: src={{ item }} dest={{ ansible_env.HOME }}/{{ item | basename }} state=link
+      with_items:
+          - "{{found_dotfiles.stdout_lines}}"
